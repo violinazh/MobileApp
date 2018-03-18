@@ -1,100 +1,166 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+
 <html>
-	<head>
-		<title>TECO BLE Reader</title>
+    <head>
+
+		<title>Reader's Aid</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<meta charset="utf-8"/>
+		<!-- Link to jQuery and jQueryMobile --> 
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
-		<link rel="stylesheet" href="css/nativedroid2.css" />
-	</head>
-	<body>
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
-	<div data-role="page">
-		<div data-role="header" data-position="fixed">
-			<a href="#leftpanel" class="ui-btn ui-icon-left"><i class="fa fa-bars"></i></a>
-			<a href="" class="ui-btn ui-icon-right"><i class="fa fa-info-circle"></i></a>
-			<h1>TECO BLE Reader</h1>
+    </head>
+	
+    <body>
+
+		<!-- Content of the home page -->
+       	<div data-role="page" id="homepage">
+			
+			<div data-role="header" data-position="fixed">
+				<a href="#panel" data-icon="bars">Menu</a>
+				<h1>Reader's Aid</h1>
+				<a href="#infopage" data-icon="info">Info</a>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<h1>Welcome to Reader's Aid</h1>
+				<p>You can refer to the menu on the right for info about the app and to the menu on the left for settings</p>
+			</div>
+
 		</div>
 
-		<!-- panel left -->
-			<div data-role="panel" id="leftpanel" data-display="overlay" data-position-fixed="true" >
-
-				<div class='nd2-sidepanel-profile wow fadeInDown'>
-					<img class='profile-background' src="//lorempixel.com/400/200/abstract/2/" />
-					<div class="row">
-						<div class='col-xs-4 center-xs'>
-							<div class='box'>
-								<img class="profile-thumbnail" src="//lorempixel.com/200/200/people/9/" />
-							</div>
-						</div>
-						<div class='col-xs-8'>
-							<div class='box profile-text'>
-								<strong>Jane Doe</strong>
-								<span class='subline'>Super Power User</span>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-				<ul data-role="listview" data-inset="false">
-					<li data-role="list-divider">Elements</li>
-				</ul>
-				<div data-role="collapsible" data-inset="false"  data-collapsed-icon="carat-d" data-expanded-icon="carat-d" data-iconpos="right">
-					<h3>Basic Elements</h3>
-					<ul data-role="listview" data-inset="false" data-icon="false">
-						
-					</ul>
-				</div>
-				<div data-role="collapsible" data-inset="false" data-collapsed-icon="carat-d" data-expanded-icon="carat-d" data-iconpos="right">
-					<h3>Extended Elements</h3>
-					<ul data-role="listview" data-icon="false">
-						
-					</ul>
-				</div>
-				<ul data-role="listview" data-inset="false">
-					<li data-role="list-divider">Layouts</li>
-				</ul>
-				<div data-role="collapsible" data-inset="false" data-collapsed-icon="carat-d" data-expanded-icon="carat-d" data-iconpos="right">
-					<h3>Real-World-Examples</h3>
-					<ul data-role="listview" data-icon="false">
-						
-					</ul>
-				</div>
-				<hr class="inset">
-				<ul data-role="listview" data-inset="false">
-					<li data-role="list-divider">Information</li>
-				</ul>
-				<div data-role="collapsible" data-inset="false" data-collapsed-icon="carat-d" data-expanded-icon="carat-d" data-iconpos="right">
-					<h3>Nice to Know</h3>
-					<ul data-role="listview" data-icon="false">
-						
-					</ul>
-				</div>
-			</div>
-			<!-- /panel left -->
+		<!-- Content of the info page -->
+        <div data-role="page" id="infopage">
 			
-		<!-- List view used to show BLE status and data. -->
-		<ul id="deviceList" data-role="listview">
-			<li> <h2 id="status">Status: Waiting for scan.</h2> </li>
-			<li> <h2 id="val1"></h2> </li>
-			<li> <h2 id="val2"></h2> </li>
-			<li> <h2 id="val3"></h2> </li>
-		</ul>
+			<div data-role="header" data-position="fixed">
+				<a href="#panel" data-icon="bars">Menu</a>
+				<h1>Reader's Aid</h1>
+				<a href="#homepage" data-icon="home">Home</a>
+			</div>
 
-		<!-- Button styled as Floating Action Button. -->
-		<button id="scanButton" style="position: absolute !important; bottom: 20px; right: 20px;" onclick="startBLEScan();" class="pull-right ui-btn ui-btn-inline ui-btn-fab ui-mini ui-btn-raised clr-warning ui-enabled"><i class="zmdi zmdi-bluetooth-search zmd-3x"></i></button>
-	
-	</div>
+			<div data-role="main" class="ui-content">
+				<h1>Info</h1>
+				<p>
+			This is a helping website/app, which has the following three functions to help a reader: <br><br>
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>	
-	<script src="js/nativedroid2.js"></script>
-	<script src="nd2settings.js"></script>
-	<script src="js/index.js"></script>
-	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>	
+			1. <b>Position check</b> is meant to inform the user if his position is right for reading, so that he does not hurt his back and neck.<br>
+			2. <b>Light sensor</b> is used to determine if the user is reading in a dark environment and the color of the background is adjusted accordingly.<br>
+
+				<p style="color:red">Warning: Light sensors are only detectable on Firefox browsers!</p>
+
+			3. <b>Reading time</b> is counted and the user gets a notification/alert when he must do a break, so that his eyes do not get tired.
+				</p>
+			</div>
+
+		</div>
+
+		<!-- Content of the file page -->
+       	<div data-role="page" id="filepage">
+			
+			<div data-role="header" data-position="fixed">
+				<a href="#panel" data-icon="bars">Menu</a>
+				<h1>Reader's Aid</h1>
+				<a href="#infopage" data-icon="info">Info</a>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<h1>Files</h1>
+				<ul data-role="listview" data-inset="true">
+					<li><a href="#story1">The Wild Cat</a></li>
+					<li><a href="#">Not yet added</a></li>
+					<li><a href="#">Not yet added</a></li>
+				</ul>
+			</div>
+
+		</div>
+
+		<!-- Content of the story page -->
+       	<div data-role="page" id="story1">
+			
+			<div data-role="header" data-position="fixed">
+				<a href="#panel" data-icon="bars">Menu</a>
+				<h1>Reader's Aid</h1>
+				<a href="#infopage" data-icon="info">Info</a>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<h1>Excerpt from The Wild Cat by Edgar Allan Poe</h1>
+				<p> For the most wild, yet most homely narrative which I am about to pen, I neither expect nor solicit belief. Mad indeed would I be to expect it, in a case where my very senses reject their own evidence. Yet, mad am I not - and very surely do I not dream. But to-morrow I die, and to-day I would unburthen my soul. My immediate purpose is to place before the world, plainly, succinctly, and without comment, a series of mere household events. In their consequences, these events have terrified - have tortured - have destroyed me. Yet I will not attempt to expound them. To me, they have presented little but Horror - to many they will seem less terrible than barroques. Hereafter, perhaps, some intellect may be found which will reduce my phantasm to the common-place - some intellect more calm, more logical, and far less excitable than my own, which will perceive, in the circumstances I detail with awe, nothing more than an ordinary succession of very natural causes and effects. <br><br> From my infancy I was noted for the docility and humanity of my disposition. My tenderness of heart was even so conspicuous as to make me the jest of my companions. I was especially fond of animals, and was indulged by my parents with a great variety of pets. With these I spent most of my time, and never was so happy as when feeding and caressing them. This peculiarity of character grew with my growth, and in my manhood, I derived from it one of my principal sources of pleasure. To those who have cherished an affection for a faithful and sagacious dog, I need hardly be at the trouble of explaining the nature or the intensity of the gratification thus derivable. There is something in the unselfish and self-sacrificing love of a brute, which goes directly to the heart of him who has had frequent occasion to test the paltry friendship and gossamer fidelity of mere Man. <br><br> I married early, and was happy to find in my wife a disposition not uncongenial with my own. Observing my partiality for domestic pets, she lost no opportunity of procuring those of the most agreeable kind. We had birds, gold-fish, a fine dog, rabbits, a small monkey, and a cat.......</p>
+			</div>
+
+		</div>
+
+		<!-- Content of the position page -->
+       	<div data-role="page" id="positionpage">
+			
+			<div data-role="header" data-position="fixed">
+				<a href="#panel" data-icon="bars">Menu</a>
+				<h1>Reader's Aid</h1>
+				<a href="#infopage" data-icon="info">Info</a>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<h1>Position settings</h1>
+				<fieldset>
+				  <div data-role="fieldcontain">
+					<label for="chbxPos">Turn off/on the position check:</label>
+					<input type="checkbox" id="chbxPos" data-role="flipswitch" onchange="chbxPos()">
+				  </div>
+				</fieldset>
+				<h2>Debug:</h2>
+				<p id="debug" class="responsiveText"></p>
+				<p id="output" class="responsiveText"></p>
+			</div>
+
+		</div>
+
+		<!-- Content of the wearable page -->
+       	<div data-role="page" id="wearablepage">
+			
+			<div data-role="header" data-position="fixed">
+				<a href="#panel" data-icon="bars">Menu</a>
+				<h1>Reader's Aid</h1>
+				<a href="#infopage" data-icon="info">Info</a>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<h1>Wearable settings</h1>
+				<fieldset>
+				  <div data-role="fieldcontain">
+					<label for="chbxW">Turn off/on the position check:</label>
+					<input type="checkbox" id="chbxW" data-role="flipswitch" onchange="chbxWearable()">
+				  </div>
+				</fieldset>
+				<h2>Debug:</h2>
+				<p id="status">Status: Waiting for scan.</p>
+			</div>
+
+		</div>
+		
+		<div data-role="panel" id="panel" data-position="left" data-display="overlay" data-theme="a">
+	 		<h2>Options</h2>
+			<ul data-role="listview" data-divider-theme="a">
+				<li data-role="list-divider">File</li>
+				<li><a href="#filepage">Load file</a></li>
+				<li data-role="list-divider">Functions</li>
+				<li><a href="#positionpage">Position</a></li>
+				<li><a href="#lightpage">Light</a></li>
+				<li><a href="#timepage">Time</a></li>
+				<li data-role="list-divider">Wearable</li>
+				<li><a href="#wearablepage">Connect to Wearable</a></li>
+			</ul>
+		</div>
 	
-	</body>
+		<!-- Load Cordova/PhoneGap and our JavaScript file. Then call initialize() from index.js -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            initialize();
+        </script>
+		
+    </body>
 </html>

@@ -1,11 +1,11 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "bleReaderSimple",
-  "short_name": "bleReaderSimple",
-  "version": "edu.teco.bleReaderExample",
-  "description": "Example for establishing a BLE connection.",
-  "author": "PhoneGap Team",
+  "name": "HelloPhoneGap",
+  "short_name": "HelloPhoneGap",
+  "version": "edu.teco.hellophonegap",
+  "description": "Hello World sample application that responds to the deviceready event.",
+  "author": "TECO",
   "icons": [
     {
       "src": "icon.png",
