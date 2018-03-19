@@ -17,8 +17,9 @@ var seconds = 0;
 
 /* BLE */
 // Service/Characteristics for TECO Vibration Wearable.
-var VIB_SERVICE	       	= "713D0000-503E-4C75-BA94-3148F18D941E";
-var VIB_CHARACTERISTIC	= "713D0003-503E-4C75-BA94-3148F18D941E";
+var VIB_SERVICE	       		= "713D0000-503E-4C75-BA94-3148F18D941E";
+var VIB_CHARACTERISTIC_2	= "713D0002-503E-4C75-BA94-3148F18D941E";
+var VIB_CHARACTERISTIC_3	= "713D0003-503E-4C75-BA94-3148F18D941E";
 
 var scanTimeout;
 var cycleInterval;
@@ -27,9 +28,11 @@ var connected = false;
 // The BLE device
 var connectedDevice;
 
-// TypedArray for data we want to send (5 bytes)
-var data = new Uint8Array(4);
-var last_data = new Uint8Array(5);
+// TypedArray for data we want to send (4 bytes)
+var dataToWrite = new Uint8Array(4);
+var last_data = new Uint8Array(4);
+
+//var dataR = new ArrayBuffer(1);
 
 $('#panel').enhanceWithin().panel();
 
@@ -59,7 +62,7 @@ function bleDisabled() {
 function bleEnabled() {
 	
 	// Set status line.
-	//$("#status").html("Started 10 second scan.");
+	$("#status").html("Started 10 second scan.");
 	
 	// Start scan with "device found"-callback.
 	ble.scan([], 10, function(device) {
@@ -77,7 +80,7 @@ function bleEnabled() {
 			// Device is not one of our wearables. No action required.
 		}
 	}, function() {
-		//$("#status").html("Scan failed.");
+		$("#status").html("Scan failed.");
 	});
 	
 	// If device was not found after 10 seconds, stop scan.
@@ -86,9 +89,7 @@ function bleEnabled() {
 
 function stopSuccess(){}
 
-function stopFailure(){
-	ble.disconnect(connectedDevice.id, disconnectSuccess, disconnectFailure);
-}
+function stopFailure(){}
 
 // Callback for finished BLE scan.
 function stopBLEScan(){
@@ -98,17 +99,23 @@ function stopBLEScan(){
 // Connection failed or connection lost. Set status accordingly.
 function connectFailure(peripheral) {
 	$("#status").html("Connection failed.");
-	
-	//clearInterval(shiftByteAndSend);
-
 }
 
 // Callback for established connection.
 function connectSuccess(device) {
 	connectedDevice = device;
-	
+		doNothing();
 	// Print all device info to debug.
 	console.log(JSON.stringify(device));
+	// read data from a characteristic, do something with output data ??? why is it not working
+	ble.read(device.id, VIB_SERVICE, VIB_CHARACTERISTIC_2, 
+		function(data){
+		    console.log("Max. update frequency: " + JSON.stringify(data));
+		},
+		function(failure){
+			console.log("Max. update frequency couldn't be obtained'");
+		}
+	);
 	$("#status").html("Connected!");
 
 }
@@ -136,24 +143,25 @@ function shiftByteAndSend() {
 }*/
 
 function doNothing() {
-
-	data[0] = 0x00;
-	data[1] = 0x00;
-	data[2] = 0x00;
-	data[3] = 0x00;
+	console.log("bla bla");
+	dataToWrite[0] = 0x00;
+	dataToWrite[1] = 0x00;
+	dataToWrite[2] = 0x00;
+	dataToWrite[3] = 0x00;
 
 	// Send byte array to wearable.
-	ble.writeWithoutResponse(connectedDevice.id, VIB_SERVICE, VIB_CHARACTERISTIC, data.buffer, writeDone, writeFailure);
+	ble.writeWithoutResponse(connectedDevice.id, VIB_SERVICE, VIB_CHARACTERISTIC_3, dataToWrite.buffer, writeDone, writeFailure);
 }
 
 function doSomething() {
-	data[0] = 0xA0;
-	data[1] = 0xA0;
-	data[2] = 0xA0;
-	data[3] = 0xA0;
+
+	dataToWrite[0] = 0xF0;
+	dataToWrite[1] = 0xF0;
+	dataToWrite[2] = 0xF0;
+	dataToWrite[3] = 0xF0;
 
 	// Send byte array to wearable.
-	ble.writeWithoutResponse(connectedDevice.id, VIB_SERVICE, VIB_CHARACTERISTIC, data.buffer, writeDone, writeFailure);
+	ble.writeWithoutResponse(connectedDevice.id, VIB_SERVICE, VIB_CHARACTERISTIC_3, dataToWrite.buffer, writeDone, writeFailure);
 }
 
 // Callback when write is done.
@@ -164,14 +172,10 @@ function writeDone() {
 // Callback when write fails.
 function writeFailure() {
 	$("#status").html("Write failed.");
-	//clearInterval(cycleInterval);
-	//doNothing();
-	//ble.disconnect(connectedDevice.id, disconnectSuccess, disconnectFailure);
-
 }
 
 function chbxPos() {
-	//alert('Hello');
+
 	var checkbox = document.getElementById("chbxPos");
 
 	if(checkbox.checked == true) {
@@ -185,7 +189,6 @@ function chbxPos() {
 
 		/* BLE */
 		if (connected == true) {
-			//clearInterval(cycleInterval);
 			doNothing();
 		} else {
 			// Do nothing
@@ -202,7 +205,7 @@ function position() {
 
 // Event listener for the gyroscope
 function handlePosE(event) {
-		//console.log('We enter.');
+
 		var x = event.beta;  // In degree in the range [-180,180]; motion around the x axis
 		var y = event.gamma;  // In degree in the range [-90,90]; motion around the y axis
 
@@ -215,27 +218,24 @@ function handlePosE(event) {
 				document.getElementById('debug').innerHTML = "Beta value = " + x;
 				//console.log('We are here.');
    				if (x < minRange || x > maxRange) { // Here we handle the wrong position event
-					//alert('Wrong');
+
 					document.getElementById('output').innerHTML  = "Wrong position!";
 					document.getElementById('output').style.color = "red";
 
 					/* BLE */
 					if (connected == true) {
-						// Start interval: Send data and shift bytes every 0.1 seconds
-						//initData();
-						//cycleInterval = setInterval(shiftByteAndSend, 100);
 						doSomething();
 					} else {
 						// Do nothing
 					}
 
 				} else {
+
 					document.getElementById('output').innerHTML  = "Position OK";
 					document.getElementById('output').style.color = "green";
 
 					/* BLE */
 					if (connected == true) {
-						//clearInterval(cycleInterval);
 						doNothing();
 					} else {
 						// Do nothing
@@ -259,7 +259,7 @@ function handlePosE(event) {
 }
 
 function chbxWearable() {
-	//alert('Hello');
+
 	var checkbox = document.getElementById("chbxW");
 
 	if(checkbox.checked == true) {
@@ -267,7 +267,6 @@ function chbxWearable() {
 		startBLEScan();
     }
    	else {
-		
 		ble.disconnect(connectedDevice.id, disconnectSuccess, disconnectFailure);
 	}
 
@@ -276,16 +275,11 @@ function chbxWearable() {
 // Disconnection failed.
 function disconnectFailure(peripheral) {
 	$("#status").html("Disconnection failed.");
-
-	//clearInterval(cycleInterval);
-	//??? connected = false;
 }
 
 // Callback for successful disconnect.
 function disconnectSuccess(device) {
 	$("#status").html("Disconnected.");
-	
-	//clearInterval(cycleInterval);	
 	connected = false;
 	
 }
