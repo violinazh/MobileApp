@@ -1,0 +1,92 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "https://github.com/DeshanKTD/cordova-plugin-lightsensor",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "https://github.com/DeshanKTD/cordova-plugin-lightsensor",
+        "spec": "git+https://github.com/DeshanKTD/cordova-plugin-lightsensor.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:DeshanKTD/cordova-plugin-lightsensor.git",
+          "sshUrl": "git+ssh://git@github.com/DeshanKTD/cordova-plugin-lightsensor.git",
+          "httpsUrl": "git+https://github.com/DeshanKTD/cordova-plugin-lightsensor.git",
+          "gitUrl": "git://github.com/DeshanKTD/cordova-plugin-lightsensor.git",
+          "shortcut": "github:DeshanKTD/cordova-plugin-lightsensor",
+          "directUrl": "https://raw.githubusercontent.com/DeshanKTD/cordova-plugin-lightsensor/master/package.json"
+        }
+      },
+      "/home/vzh/Documents/Workspace_HTML/MobileApp"
+    ]
+  ],
+  "_from": "git+https://github.com/DeshanKTD/cordova-plugin-lightsensor.git",
+  "_id": "cordova-plugin-lightsensor@1.0.0",
+  "_inCache": true,
+  "_location": "/cordova-plugin-lightsensor",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "https://github.com/DeshanKTD/cordova-plugin-lightsensor",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "https://github.com/DeshanKTD/cordova-plugin-lightsensor",
+    "spec": "git+https://github.com/DeshanKTD/cordova-plugin-lightsensor.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:DeshanKTD/cordova-plugin-lightsensor.git",
+      "sshUrl": "git+ssh://git@github.com/DeshanKTD/cordova-plugin-lightsensor.git",
+      "httpsUrl": "git+https://github.com/DeshanKTD/cordova-plugin-lightsensor.git",
+      "gitUrl": "git://github.com/DeshanKTD/cordova-plugin-lightsensor.git",
+      "shortcut": "github:DeshanKTD/cordova-plugin-lightsensor",
+      "directUrl": "https://raw.githubusercontent.com/DeshanKTD/cordova-plugin-lightsensor/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/DeshanKTD/cordova-plugin-lightsensor.git#ba49e0de074c8acac9cde245a8fe6a8ed711a52f",
+  "_shasum": "efc15167ee097f5fbf242e287297828b0598c2ce",
+  "_shrinkwrap": null,
+  "_spec": "https://github.com/DeshanKTD/cordova-plugin-lightsensor",
+  "_where": "/home/vzh/Documents/Workspace_HTML/MobileApp",
+  "author": {
+    "name": "Deshan Kalupahana"
+  },
+  "bugs": {
+    "url": "https://github.com/DeshanKTD/cordova-plugin-lightsensor/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-lightsensor",
+    "platforms": [
+      "android"
+    ]
+  },
+  "dependencies": {},
+  "description": "Cordova Light Sensor Plugin",
+  "devDependencies": {},
+  "gitHead": "ba49e0de074c8acac9cde245a8fe6a8ed711a52f",
+  "homepage": "https://github.com/DeshanKTD/cordova-plugin-lightsensor#readme",
+  "keywords": [
+    "cordova",
+    "light",
+    "illumination",
+    "ecosystem:cordova",
+    "length",
+    "close"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-lightsensor",
+  "optionalDependencies": {},
+  "readme": "cordova-plugin-lightsensor\n=========================\n\nThis plugin can be use to get intensity level that falls in to the device.\nThe API supports to one time call and repeated calls which will directed to callback functions.\n\nA successful response receive as a JSON, {\"intensity\":5}\nThe value that get from `reading` object is in Lux (measurement unit)\n\n\nInstallation\n--------------\n\n<code> cordova plugin add https://github.com/DeshanKTD/cordova-plugin-lightsensor </code>\n\nMethods\n-------\n- window.plugin.lightsensor.getReading\n- window.plugin.lightsensor.watchReadings\n- window.plugin.lightsensor.stop\n\n\nwindow.plugin.lightsensor.getReading\n-----------------------------------\n\nThis method get a single reading from the lightsensor sensor\n\n<pre>\n<code>\n\twindow.plugin.lightsensor.getReading(\n\t    function success(reading){\n\t      console.log(JSON.stringify(reading)); \n\t      alert(JSON.stringify(reading));\n\t      // Output: {\"intensity\": 25}\n\t    }, \n\t    function error(message){\n\t     console.log(message);\n\t    }\n  \t)\n  </code>\n</pre>\n\n\n `reading` object properties\n - `intensity`\n\n\n\n\nwindow.plugin.lightsensor.watchReadings\n----------------------------------\n\nThis helps get reapeated readings from the lightsensor sensor.\n\n<pre>\n\t<code>\n\t\twindow.plugin.lightsensor.watchReadings(\n\t\t    function success(reading){\n\t\t      console.log(JSON.stringify(reading));\n\t\t      alert(JSON.stringify(reading)); \n\t\t      // Output: {\"intensity\": 25}\n\t\t    }, \n\t\t    function error(message){\n\t\t     console.log(message);\n\t\t    }\n\t\t  )\n\t</code>\n</pre>\n\n\n `reading` object properties\n - `intensity`\n\n\n\n\nwindow.plugin.lightsensor.stop\n----------------------------\n\nStops getting readings from the lightsensor sensor.\n<pre>\n\t<code>\n\t  window.plugin.lightsensor.stop([watchID])\n\t</code>\n</pre>\n\nSupported Platforms\n--------------------\n\n- Android\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeshanKTD/cordova-plugin-lightsensor.git"
+  },
+  "version": "1.0.0"
+}

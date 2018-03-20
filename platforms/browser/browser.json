@@ -9,11 +9,24 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "edu.teco.hellophonegap"
+    },
+    "cordova-plugin-lightsensor": {
+      "PACKAGE_NAME": "edu.teco.hellophonegap"
     }
   },
   "dependent_plugins": {},
-  "modules": [],
+  "modules": [
+    {
+      "file": "plugins/cordova-plugin-lightsensor/www/lightsensor.js",
+      "id": "cordova-plugin-lightsensor.LightSensor",
+      "pluginId": "cordova-plugin-lightsensor",
+      "clobbers": [
+        "window.plugin.lightsensor"
+      ]
+    }
+  ],
   "plugin_metadata": {
-    "cordova-plugin-whitelist": "1.3.3"
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-lightsensor": "1.0.0"
   }
 }

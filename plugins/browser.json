@@ -9,6 +9,9 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "edu.teco.hellophonegap"
+    },
+    "cordova-plugin-lightsensor": {
+      "PACKAGE_NAME": "edu.teco.hellophonegap"
     }
   },
   "dependent_plugins": {}

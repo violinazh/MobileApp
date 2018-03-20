@@ -57,6 +57,16 @@ $(document).on("pagecreate", function() {
     });
 });
 
+// Disconnecting the device when closing the app through home button
+document.addEventListener("pause", onPause, false); 
+
+function onPause() { 
+ 	if (connected == true) {
+		ble.disconnect(connectedDevice.id, disconnectSuccess, disconnectFailure);
+		navigator.app.exitApp(); 
+	}
+} 
+
 // Start listening for the deviceready-Event.
 function initialize() {
 	document.addEventListener('deviceready', onDeviceReady, false);

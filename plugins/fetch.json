@@ -1,10 +1,18 @@
 {
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-whitelist@1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    }
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-whitelist@1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-lightsensor": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/DeshanKTD/cordova-plugin-lightsensor"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
 }

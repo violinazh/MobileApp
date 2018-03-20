@@ -57,6 +57,16 @@ $(document).on("pagecreate", function() {
     });
 });
 
+// Disconnecting the device when closing the app through home button
+document.addEventListener("pause", onPause, false); 
+
+function onPause() { 
+ 	if (connected == true) {
+		ble.disconnect(connectedDevice.id, disconnectSuccess, disconnectFailure);
+		navigator.app.exitApp(); 
+	}
+} 
+
 // Start listening for the deviceready-Event.
 function initialize() {
 	document.addEventListener('deviceready', onDeviceReady, false);
@@ -145,31 +155,7 @@ function connectSuccess(device) {
 
 }
 
-/*function initData() {
-	// Reset data to initial state (first motor on)
-	data[0] = 0xff;
-	data[1] = 0x00;
-	data[2] = 0x00;
-	data[3] = 0x00;	
-}
-
-function shiftByteAndSend() {
-	
-	// Shift ("rotate") byte by one, so FF000000 becomes 00FF000000 and so on.
-	for (var i = 0; i < 4; i++) {
-		last_data[i] = data[i];
-	}	
-	for (var i = 0; i < 4; i++) {
-		data[i] = last_data[(i + 1) % 4];
-	}
-	
-	// Send byte array to wearable.
-	ble.writeWithoutResponse(connectedDevice.id, VIB_SERVICE, VIB_CHARACTERISTIC, data.buffer, writeDone, writeFailure);
-}*/
-
 function doNothing() {
-	//console.log("bla bla");
-
 	if (stop == false) {
 		data1[0] = 0x00;
 		data1[1] = 0x00;
@@ -183,7 +169,6 @@ function doNothing() {
 }
 
 function doSomething() {
-	//console.log("Connected: " + connected);
 	if (stop == false) {
 		data2[0] = 0xF0;
 		data2[1] = 0xF0;
