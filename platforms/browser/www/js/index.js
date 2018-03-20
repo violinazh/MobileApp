@@ -29,10 +29,17 @@ var connected = false;
 var connectedDevice;
 
 // TypedArray for data we want to send (4 bytes)
-var dataToWrite = new Uint8Array(4);
+var data1 = new Uint8Array(4);
+var data2 = new Uint8Array(4);
 var last_data = new Uint8Array(4);
 
 //var dataR = new ArrayBuffer(1);
+
+// Variables for sending data to the wearable - every 10 times
+var something = 0;
+var nothing = 0;
+
+var stop = false;
 
 $('#panel').enhanceWithin().panel();
 
@@ -89,7 +96,9 @@ function bleEnabled() {
 
 function stopSuccess(){}
 
-function stopFailure(){}
+function stopFailure(){
+	alert("Stopping scan failed.");
+}
 
 // Callback for finished BLE scan.
 function stopBLEScan(){
@@ -99,23 +108,25 @@ function stopBLEScan(){
 // Connection failed or connection lost. Set status accordingly.
 function connectFailure(peripheral) {
 	$("#status").html("Connection failed.");
+	alert("Connection failed.");
 }
 
 // Callback for established connection.
 function connectSuccess(device) {
 	connectedDevice = device;
-		doNothing();
+	stop = false;
+
 	// Print all device info to debug.
 	console.log(JSON.stringify(device));
-	// read data from a characteristic, do something with output data ??? why is it not working
-	ble.read(device.id, VIB_SERVICE, VIB_CHARACTERISTIC_2, 
+	// ??? read data from a characteristic, do something with output data
+	/*ble.read(device.id, VIB_SERVICE, VIB_CHARACTERISTIC_2, 
 		function(data){
 		    console.log("Max. update frequency: " + JSON.stringify(data));
 		},
 		function(failure){
 			console.log("Max. update frequency couldn't be obtained'");
 		}
-	);
+	);*/
 	$("#status").html("Connected!");
 
 }
@@ -143,25 +154,31 @@ function shiftByteAndSend() {
 }*/
 
 function doNothing() {
-	console.log("bla bla");
-	dataToWrite[0] = 0x00;
-	dataToWrite[1] = 0x00;
-	dataToWrite[2] = 0x00;
-	dataToWrite[3] = 0x00;
+	//console.log("bla bla");
 
-	// Send byte array to wearable.
-	ble.writeWithoutResponse(connectedDevice.id, VIB_SERVICE, VIB_CHARACTERISTIC_3, dataToWrite.buffer, writeDone, writeFailure);
+	if (stop == false) {
+		data1[0] = 0x00;
+		data1[1] = 0x00;
+		data1[2] = 0x00;
+		data1[3] = 0x00;
+
+		// Send byte array to wearable.
+		ble.writeWithoutResponse(connectedDevice.id, VIB_SERVICE, VIB_CHARACTERISTIC_3, data1.buffer, writeDone, writeFailure);
+	}
+	
 }
 
 function doSomething() {
+	//console.log("Connected: " + connected);
+	if (stop == false) {
+		data2[0] = 0xF0;
+		data2[1] = 0xF0;
+		data2[2] = 0xF0;
+		data2[3] = 0xF0;
 
-	dataToWrite[0] = 0xF0;
-	dataToWrite[1] = 0xF0;
-	dataToWrite[2] = 0xF0;
-	dataToWrite[3] = 0xF0;
-
-	// Send byte array to wearable.
-	ble.writeWithoutResponse(connectedDevice.id, VIB_SERVICE, VIB_CHARACTERISTIC_3, dataToWrite.buffer, writeDone, writeFailure);
+		// Send byte array to wearable.
+		ble.writeWithoutResponse(connectedDevice.id, VIB_SERVICE, VIB_CHARACTERISTIC_3, data2.buffer, writeDone, writeFailure);
+	}
 }
 
 // Callback when write is done.
@@ -172,6 +189,7 @@ function writeDone() {
 // Callback when write fails.
 function writeFailure() {
 	$("#status").html("Write failed.");
+	alert("Write failed.");
 }
 
 function chbxPos() {
@@ -223,8 +241,12 @@ function handlePosE(event) {
 					document.getElementById('output').style.color = "red";
 
 					/* BLE */
-					if (connected == true) {
-						doSomething();
+					if (connected == true && stop == false) {
+						if (something % 10 == 0) {
+							doSomething();
+							something = 0;
+						}
+						something++;
 					} else {
 						// Do nothing
 					}
@@ -235,8 +257,12 @@ function handlePosE(event) {
 					document.getElementById('output').style.color = "green";
 
 					/* BLE */
-					if (connected == true) {
-						doNothing();
+					if (connected == true && stop == false) {
+						if (nothing % 10 == 0) {
+							doNothing();
+							nothing = 0;
+						}
+						nothing++;
 					} else {
 						// Do nothing
 					}
@@ -261,13 +287,38 @@ function handlePosE(event) {
 function chbxWearable() {
 
 	var checkbox = document.getElementById("chbxW");
+	var checkboxP = document.getElementById("chbxPos");
 
 	if(checkbox.checked == true) {
 		
-		startBLEScan();
+		if(checkboxP.checked == true) {
+			stop = true;
+			// turn off the position event
+			window.removeEventListener("deviceorientation", handlePosE);
+			// connect the bluetooth device
+			startBLEScan();
+			// turn on the position event
+			position();
+		} else {
+			// connect the bluetooth device
+			startBLEScan();
+		}
+		
     }
    	else {
-		ble.disconnect(connectedDevice.id, disconnectSuccess, disconnectFailure);
+
+		if(checkboxP.checked == true) {
+			stop = true;
+			// turn off the position event
+			window.removeEventListener("deviceorientation", handlePosE);
+			// disconnet the bluetooth device
+			ble.disconnect(connectedDevice.id, disconnectSuccess, disconnectFailure);
+			// turn on the position event
+			position();
+		} else {
+			// disconnet the bluetooth device
+			ble.disconnect(connectedDevice.id, disconnectSuccess, disconnectFailure);
+		}
 	}
 
 }
@@ -275,12 +326,15 @@ function chbxWearable() {
 // Disconnection failed.
 function disconnectFailure(peripheral) {
 	$("#status").html("Disconnection failed.");
+	alert("Disconnection failed.");
 }
 
 // Callback for successful disconnect.
 function disconnectSuccess(device) {
 	$("#status").html("Disconnected.");
 	connected = false;
-	
+	stop = false;
+	something = 0;
+	nothing = 0;
 }
 
