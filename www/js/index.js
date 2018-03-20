@@ -41,7 +41,21 @@ var nothing = 0;
 
 var stop = false;
 
+// External panel
 $('#panel').enhanceWithin().panel();
+
+// Opening and closing the panel on swipe
+$(document).on("pagecreate", function() {
+    $(document).on("swipeleft swiperight", function(e) {
+        if ($(".ui-page-active" ).jqmData("panel") !== "open") {
+            if (e.type === "swipeleft") {
+                $("#panel").panel("close");
+            } else if (e.type === "swiperight") {
+                $("#panel").panel("open");
+            }
+        }
+    });
+});
 
 // Start listening for the deviceready-Event.
 function initialize() {
@@ -203,6 +217,7 @@ function chbxPos() {
    	else {
 		document.getElementById('debug').innerHTML = "";
 		document.getElementById('output').innerHTML = "";
+		document.getElementById('pos').innerHTML = "";
     	window.removeEventListener("deviceorientation", handlePosE);
 
 		/* BLE */
@@ -229,16 +244,20 @@ function handlePosE(event) {
 
 		if (x == null && y == null) { // Checking if there is a gyroscope on the device
 			document.getElementById('debug').innerHTML = "No gyroscope present.";
+			document.getElementById('pos').innerHTML = "No gyroscope present.";
 			
 		} else {
 
 			if (window.matchMedia("(orientation: portrait)").matches) { // Detecting portrait mode
 				document.getElementById('debug').innerHTML = "Beta value = " + x;
-				//console.log('We are here.');
+				
    				if (x < minRange || x > maxRange) { // Here we handle the wrong position event
 
 					document.getElementById('output').innerHTML  = "Wrong position!";
 					document.getElementById('output').style.color = "red";
+
+					document.getElementById('pos').innerHTML  = "Wrong position!";
+					document.getElementById('pos').style.color = "red";
 
 					/* BLE */
 					if (connected == true && stop == false) {
@@ -255,6 +274,9 @@ function handlePosE(event) {
 
 					document.getElementById('output').innerHTML  = "Position OK";
 					document.getElementById('output').style.color = "green";
+
+					document.getElementById('pos').innerHTML  = ""; // or "Position OK"
+					document.getElementById('pos').style.color = "green";
 
 					/* BLE */
 					if (connected == true && stop == false) {

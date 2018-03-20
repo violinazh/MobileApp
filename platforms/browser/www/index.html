@@ -9,7 +9,7 @@
 		<!-- Link to jQuery and jQueryMobile --> 
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-		<link rel="stylesheet" href="css/index.css" />
+		 <link rel="stylesheet" type="text/css" href="css/jquery.mobile.flatui.css" />
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
@@ -27,8 +27,9 @@
 			</div>
 
 			<div data-role="main" class="ui-content">
-				<h1>Welcome to Reader's Aid</h1>
-				<p>You can refer to the menu on the right for info about the app and to the menu on the left for settings</p>
+				<h1 style="text-align:center;">Welcome to Reader's Aid</h1>
+				<p>You can refer to the menu on the right (swipe right) for info about the app and to the menu on the left for settings.</p>
+				<img src="img/books.jpg" style="width:310px;height:300px">
 			</div>
 
 		</div>
@@ -42,17 +43,19 @@
 				<a href="#homepage" data-icon="home">Home</a>
 			</div>
 
-			<div data-role="main" class="ui-content">
-				<h1>Info</h1>
+			<div data-role="main" class="ui-content" style="text-align:justify;">
+				<h1 style="text-align:center;">Info</h1>
 				<p>
-			This is a helping website/app, which has the following three functions to help a reader: <br><br>
+			This is a helping website/app, which has the following functions to help a reader: <br><br>
 
-			1. <b>Position check</b> is meant to inform the user if his position is right for reading, so that he does not hurt his back and neck.<br>
+			1. <b>Position check</b> is meant to inform the user if his position is right for reading, so that he does not hurt his back and neck. If the user is connected to the wearable, it notifies him through vibrating if he is in the wrong position.<br>
 			2. <b>Light sensor</b> is used to determine if the user is reading in a dark environment and the color of the background is adjusted accordingly.<br>
 
 				<p style="color:red">Warning: Light sensors are only detectable on Firefox browsers!</p>
 
-			3. <b>Reading time</b> is counted and the user gets a notification/alert when he must do a break, so that his eyes do not get tired.
+			3. <b>Reading time</b> is counted and the user gets a notification/alert when he must do a break, so that his eyes do not get tired.</br>
+
+			4. <b>Connect to Wearable</b>: The user can connect to a wearable to get notified about his position during reading.
 				</p>
 			</div>
 
@@ -68,7 +71,7 @@
 			</div>
 
 			<div data-role="main" class="ui-content">
-				<h1>Files</h1>
+				<h1 style="text-align:center;">Files</h1>
 				<ul data-role="listview" data-inset="true">
 					<li><a href="#story1">The Wild Cat</a></li>
 					<li><a href="#">Not yet added</a></li>
@@ -87,9 +90,13 @@
 				<a href="#infopage" data-icon="info">Info</a>
 			</div>
 
-			<div data-role="main" class="ui-content">
+			<div data-role="main" class="ui-content" style="text-align:justify;">
 				<h1>Excerpt from The Wild Cat by Edgar Allan Poe</h1>
 				<p> For the most wild, yet most homely narrative which I am about to pen, I neither expect nor solicit belief. Mad indeed would I be to expect it, in a case where my very senses reject their own evidence. Yet, mad am I not - and very surely do I not dream. But to-morrow I die, and to-day I would unburthen my soul. My immediate purpose is to place before the world, plainly, succinctly, and without comment, a series of mere household events. In their consequences, these events have terrified - have tortured - have destroyed me. Yet I will not attempt to expound them. To me, they have presented little but Horror - to many they will seem less terrible than barroques. Hereafter, perhaps, some intellect may be found which will reduce my phantasm to the common-place - some intellect more calm, more logical, and far less excitable than my own, which will perceive, in the circumstances I detail with awe, nothing more than an ordinary succession of very natural causes and effects. <br><br> From my infancy I was noted for the docility and humanity of my disposition. My tenderness of heart was even so conspicuous as to make me the jest of my companions. I was especially fond of animals, and was indulged by my parents with a great variety of pets. With these I spent most of my time, and never was so happy as when feeding and caressing them. This peculiarity of character grew with my growth, and in my manhood, I derived from it one of my principal sources of pleasure. To those who have cherished an affection for a faithful and sagacious dog, I need hardly be at the trouble of explaining the nature or the intensity of the gratification thus derivable. There is something in the unselfish and self-sacrificing love of a brute, which goes directly to the heart of him who has had frequent occasion to test the paltry friendship and gossamer fidelity of mere Man. <br><br> I married early, and was happy to find in my wife a disposition not uncongenial with my own. Observing my partiality for domestic pets, she lost no opportunity of procuring those of the most agreeable kind. We had birds, gold-fish, a fine dog, rabbits, a small monkey, and a cat.......</p>
+			</div>
+
+			<div data-role="footer" data-position="fixed" style="text-align:center;">
+				<p id="pos" class="responsiveText"></p>
 			</div>
 
 		</div>
@@ -104,7 +111,7 @@
 			</div>
 
 			<div data-role="main" class="ui-content">
-				<h1>Position settings</h1>
+				<h1 style="text-align:center;">Position settings</h1>
 				<fieldset>
 				  <div data-role="fieldcontain">
 					<label for="chbxPos">Turn off/on the position check:</label>
@@ -128,7 +135,7 @@
 			</div>
 
 			<div data-role="main" class="ui-content">
-				<h1>Wearable settings</h1>
+				<h1 style="text-align:center;">Wearable settings</h1>
 				<fieldset>
 				  <div data-role="fieldcontain">
 					<label for="chbxW">Connect to Wearable:</label>
@@ -142,15 +149,15 @@
 		</div>
 		
 		<div data-role="panel" id="panel" data-position="left" data-display="overlay" data-theme="a">
-	 		<h2>Options</h2>
-			<ul data-role="listview" data-divider-theme="a">
-				<li data-role="list-divider">File</li>
+	 		<h1 style="background-image: url('img/image.jpeg');width:240px;height:60px;border-radius: 8px;">Options</h1>
+			<ul data-role="listview">
+				<li data-role="list-divider" style="font-style: italic;">File</li>
 				<li><a href="#filepage">Load file</a></li>
-				<li data-role="list-divider">Functions</li>
+				<li data-role="list-divider" style="font-style: italic;">Functions</li>
 				<li><a href="#positionpage">Position</a></li>
 				<li><a href="#lightpage">Light</a></li>
 				<li><a href="#timepage">Time</a></li>
-				<li data-role="list-divider">Wearable</li>
+				<li data-role="list-divider" style="font-style: italic;">Wearable</li>
 				<li><a href="#wearablepage">Connect to Wearable</a></li>
 			</ul>
 		</div>
