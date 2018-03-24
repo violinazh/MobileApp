@@ -2,10 +2,6 @@
 var minRange = 30; //35
 var maxRange = 50; //45
 
-// Variables for the range of good position for reading in landscape
-var minRange = 30; //35
-var maxRange = 50; //45
-
 // Variable for the range of light
 var lightRange = 100
 
@@ -132,6 +128,17 @@ function stopBLEScan(){
 // Connection failed or connection lost. Set status accordingly.
 function connectFailure(peripheral) {
 	$("#status").html("Connection failed.");
+	ble.isEnabled(
+		function() {
+			//
+		},
+		function() {
+			if (connected == true) {
+			ble.disconnect(connectedDevice.id, disconnectSuccess, disconnectFailure);
+		    alert("Bluetooth is not enabled.");
+			}
+		}
+	);
 	alert("Connection failed.");
 }
 
@@ -142,6 +149,7 @@ function connectSuccess(device) {
 
 	// Print all device info to debug.
 	console.log(JSON.stringify(device));
+
 	// ??? read data from a characteristic, do something with output data
 	/*ble.read(device.id, VIB_SERVICE, VIB_CHARACTERISTIC_2, 
 		function(data){
@@ -151,6 +159,7 @@ function connectSuccess(device) {
 			console.log("Max. update frequency couldn't be obtained'");
 		}
 	);*/
+
 	$("#status").html("Connected!");
 
 }
@@ -279,12 +288,45 @@ function handlePosE(event) {
 
 			if (window.matchMedia("(orientation: landscape)").matches) { // Detecting landscape mode
 				document.getElementById('debug').innerHTML = "Gamma value = " + y;
-		   		if ((y > -30 || y < -50)) { // Here we handle the wrong position event ??? for 30 and 50
+
+		   		if ((y > -(minRange) || y < -(maxRange))) { // Here we handle the wrong position event ??? for 30 and 50
+					
 					document.getElementById('output').innerHTML  = "Wrong position!";
 					document.getElementById('output').style.color = "red";
+
+					document.getElementById('pos').innerHTML  = "Wrong position!";
+					document.getElementById('pos').style.color = "red";
+
+					/* BLE */
+					if (connected == true && stop == false) {
+						if (something % 10 == 0) {
+							doSomething();
+							something = 0;
+						}
+						something++;
+					} else {
+						// Do nothing
+					}
+
 				} else {
+
 					document.getElementById('output').innerHTML  = "Position OK";
 					document.getElementById('output').style.color = "green";
+
+					document.getElementById('pos').innerHTML  = ""; // or "Position OK"
+					document.getElementById('pos').style.color = "green";
+
+					/* BLE */
+					if (connected == true && stop == false) {
+						if (nothing % 10 == 0) {
+							doNothing();
+							nothing = 0;
+						}
+						nothing++;
+					} else {
+						// Do nothing
+					}
+
 				}	
 			}
 
@@ -338,10 +380,15 @@ function disconnectFailure(peripheral) {
 
 // Callback for successful disconnect.
 function disconnectSuccess(device) {
+	// Refresh the checkbox
+	$('#chbxW').prop('checked', false);
+	$('#chbxW').flipswitch("refresh");
+
 	$("#status").html("Disconnected.");
 	connected = false;
 	stop = false;
 	something = 0;
 	nothing = 0;
+
 }
 
