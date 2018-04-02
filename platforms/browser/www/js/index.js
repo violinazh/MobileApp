@@ -45,6 +45,7 @@ $(document).on("pagecreate", function() {
     $(document).on("swipeleft swiperight", function(e) {
         if ($(".ui-page-active" ).jqmData("panel") !== "open") {
             if (e.type === "swipeleft") {
+				$(document.activeElement).blur();
                 $("#panel").panel("close");
             } else if (e.type === "swiperight") {
                 $("#panel").panel("open");
@@ -71,6 +72,17 @@ function initialize() {
 // Event received. We may now use PhoneGap APIs.
 function onDeviceReady() {
 	$("#status").html("Status: Ready!");
+	window.plugin.lightsensor.getReading(
+	    function success(reading){
+	      console.log(JSON.stringify(reading)); 
+	      alert(JSON.stringify(reading));
+	      // Output: {"intensity": 25}
+	    }, 
+	    function error(message){
+	     console.log(message);
+	    }
+  	)
+  
 }
 
 /* BLE */
@@ -82,6 +94,10 @@ function startBLEScan() {
 // Set status line when BLE is disabled or not available.
 function bleDisabled() {
 	$("#status").html("Enable Bluetooth first.");
+
+	// Refresh the checkbox
+	$('#chbxW').prop('checked', false);
+	$('#chbxW').flipswitch("refresh");
 	alert('Enable Bluetooth first.');
 }
 
