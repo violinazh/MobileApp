@@ -38,20 +38,19 @@ var nothing = 0;
 var stop = false;
 
 // External panel
-$('#panel').enhanceWithin().panel();
-
-// Opening and closing the panel on swipe
-$(document).on("pagecreate", function() {
-    $(document).on("swipeleft swiperight", function(e) {
-        if ($(".ui-page-active" ).jqmData("panel") !== "open") {
-            if (e.type === "swipeleft") {
-				$(document.activeElement).blur();
-                $("#panel").panel("close");
-            } else if (e.type === "swiperight") {
-                $("#panel").panel("open");
-            }
-        }
-    });
+$(document).ready(function() {
+  	$("#panel")
+		.panel({
+		  positionFixed: false,
+		  dismissible: true
+    	})
+    	.enhanceWithin()
+  	$(document).on("swipeleft", function(e) {
+   		$("#panel").panel("close");
+ 	});
+ 	$(document).on("swiperight", function(e) {
+   	 	$("#panel").panel("open");
+ 	});
 });
 
 // Disconnecting the device when closing the app through home button
@@ -82,7 +81,6 @@ function onDeviceReady() {
 	     console.log(message);
 	    }
   	)
-  
 }
 
 /* BLE */

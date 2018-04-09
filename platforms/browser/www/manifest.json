@@ -1,11 +1,11 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "HelloPhoneGap",
-  "short_name": "HelloPhoneGap",
-  "version": "edu.teco.hellophonegap",
-  "description": "Hello World sample application that responds to the deviceready event.",
-  "author": "TECO",
+  "name": "Reader's Aid",
+  "short_name": "Reader's Aid",
+  "version": "io.cordova.hellocordova",
+  "description": "Reading app with additional functions to help the user be healthier.",
+  "author": "Violina Zhekova",
   "icons": [
     {
       "src": "icon.png",
